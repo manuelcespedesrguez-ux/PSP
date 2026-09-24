@@ -8,16 +8,16 @@ public class Ejemplo2URLCon {
 
     public static void main(String[] args) {
         try {
-            URL url = new URL("http://localhost/2014/vernombre.php");
+            URL url = new URL("http://localhost/vernombre.php");
             URLConnection conexion = url.openConnection();
             conexion.setDoOutput(true);
 
-            Scanner sc = new  Scanner(System.in);
-            System.out.println("Introduce tu nombre: ");
-            String nombre = sc.nextLine();
-            System.out.println("Introduce los apellidos: ");
-            String apellidos = sc.nextLine();
-            String cadena = "nombre " + nombre + " apellidos=" + apellidos;
+            Scanner sc = new  Scanner(System.in); 
+            System.out.println("Introduce tu nombre: "); // Pedimos el nombre
+            String nombre = sc.nextLine(); // Lee el nombre
+            System.out.println("Introduce los apellidos: "); // Pedimos los apellidos
+            String apellidos = sc.nextLine(); // Lee los apellidos introducidos
+            String cadena = "nombre=" + nombre + "&apellidos=" + apellidos; // Pone el nombre y los apellidos en una unida cadena 
 
             // ESCRIBIR EN LA URL
             PrintWriter output = new PrintWriter(conexion.getOutputStream());
