@@ -1,0 +1,3 @@
+Al metodo Visualizar se le pasan como parametro distintas urls.
+Se crean varios objetos url y se le pasan al metodo Visualizar.
+El metodo visualizar "desgrana" las diversas partes que componen la url, en concreto, primero muestra la url completa y luego en este orden, el protocolo, el hoost, el puerto, el archivo, la informacion del usuario, el path, la autority y la query
