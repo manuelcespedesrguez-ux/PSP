@@ -21,6 +21,8 @@ public class servidor0 {
             // realizar acciones con cliente2
 
             ServerS.close(); // cierro socket servidor
+            cliente1.close();
+            cliente2.close();
 
         } catch (IOException e) {
             e.printStackTrace();
