@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 
 public class Ejemplo2URL {
+    @SuppressWarnings("deprecation")
     public static void main(String[] args) {
         URL url = null;
         try {

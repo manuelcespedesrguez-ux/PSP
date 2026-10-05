@@ -3,7 +3,8 @@ package intro;
 import java.net.*;
 
 public class EjemploURL {
-    
+
+    @SuppressWarnings("deprecation")
     public static void main(String[] args) {
         URL url;
         try {

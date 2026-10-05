@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Ejemplo2URLCon {
 
+     @SuppressWarnings("deprecation")
     public static void main(String[] args) {
         try {
             URL url = new URL("http://localhost/vernombre.php");
@@ -31,6 +32,7 @@ public class Ejemplo2URLCon {
                 System.out.println(linea);
             }
             reader.close();// cerrar flujo
+            sc.close();
 
         } catch (MalformedURLException me) {
             System.err.println("MalformedURLException: " + me);

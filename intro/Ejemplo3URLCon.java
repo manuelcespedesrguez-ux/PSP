@@ -7,9 +7,11 @@ import java.util.*;
 public class Ejemplo3URLCon {
 
     @SuppressWarnings("rawtypes")
+    
     public static void main(String[] args) throws Exception {
         
         String cadena;
+        @SuppressWarnings("deprecation")
         URL url = new URL("http://localhost/vernombre.html");
         URLConnection conexion = url.openConnection();
 
