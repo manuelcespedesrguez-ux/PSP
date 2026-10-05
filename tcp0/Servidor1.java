@@ -33,7 +33,7 @@ public class Servidor1 {
                     continuar = false; 
                     flujoSalida.writeUTF("Conexión finalizada por el cliente.");
                 } else {
-                    flujoSalida.writeUTF("Mensaje recibido correctamente: " + mensajeCliente);
+                    flujoSalida.writeUTF("Mensaje recibido correctamente: " + ecoUpperCase(mensajeCliente));
                 }
             }
 
@@ -46,5 +46,9 @@ public class Servidor1 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String ecoUpperCase(String mensaje) {
+        return mensaje.toUpperCase();
     }
 }
