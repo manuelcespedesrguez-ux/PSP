@@ -3,10 +3,9 @@ package tcp0;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Cliente1 {
     
@@ -14,42 +13,42 @@ public class Cliente1 {
         
         try {
             String host = "localhost";
-            int port = 6000; // puerto remoto
+            int port = 6000;
 
-            // ABRIR SOCKET
-            Socket cliente = new Socket(host, port); // conecta
+            Socket cliente = new Socket(host, port);
 
-            InetAddress inetAdress = cliente.getInetAddress();
-            System.out.println("Puerto local: " + cliente.getLocalPort());
-            System.out.println("Puerto Remoto: " + cliente.getPort());
-            System.out.println("Host Remoto: " + inetAdress.getHostName());
-            System.out.println("IP Host Remoto: " + inetAdress.getHostAddress());
+            InetAddress inetAddress = cliente.getInetAddress();
+            System.out.println("Conectado a: " + inetAddress.getHostName() + " (" + inetAddress.getHostAddress() + ")");
 
-            // CREO FLUJO DE SALIDA AL SERVIDOR
-            OutputStream salida = cliente.getOutputStream();
-            DataOutputStream flujoSalida = new DataOutputStream(salida);
+            DataOutputStream flujoSalida = new DataOutputStream(cliente.getOutputStream());
+            DataInputStream flujoEntrada = new DataInputStream(cliente.getInputStream());
+            Scanner scanner = new Scanner(System.in);
 
-            // ENVÍO UN SALUDO AL SERVIDOR
-            flujoSalida.writeUTF("Saludos al servidor del cliente");
+            boolean continuar = true;
 
-            // CREO FLUJO DE ENTRADA DESDE EL SERVIDOR
-            InputStream entrada = cliente.getInputStream();
-            DataInputStream flujoEntrada = new DataInputStream(entrada);
+            while (continuar) {
+                System.out.print("\nEscribe un mensaje para el servidor o escribe 'FIN' para terminar la comunicacion: ");
+                String mensaje = scanner.nextLine();
 
-            // EL SERVIDOR ME ENVÍA UN MENSAJE
-            System.out.println("Recibiendo del SERVIDOR: \n\t" + flujoEntrada.readUTF());
+                flujoSalida.writeUTF(mensaje);
 
-            // CERRAR STREAMS Y SOCKETS
-            entrada.close();
+                String respuesta = flujoEntrada.readUTF();
+                System.out.println("REspuesta del servidor: " + respuesta);
+
+                if (mensaje.equalsIgnoreCase("FIN")) {
+                    continuar = false;
+                }
+            }
+
+            // Cerramos flujos y conexiones
+            scanner.close();
             flujoEntrada.close();
-            salida.close();
             flujoSalida.close();
-            cliente.close(); // Cierra el socket
+            cliente.close();
+            System.out.println("Cliente desconectado.");
             
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }
