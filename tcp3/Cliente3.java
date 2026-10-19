@@ -24,7 +24,7 @@ public class Cliente3 {
             DataInputStream flujoEntrada = new DataInputStream(cliente.getInputStream());
             Scanner scanner = new Scanner(System.in);
 
-            for (int i = 1; i < 6; i++) {
+            for (int i = 1; i < 7; i++) {
                 int numero = -1;
 
                 while (numero < 1 || numero > 49) {
