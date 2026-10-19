@@ -1,4 +1,4 @@
-package tcp0;
+package tcp1_1;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Servidor2 {
-    
+public class Servidor1_1 {
+
     public static void main(String[] args) {
-        
+
         try {
             int port = 6000;
             ServerSocket servidor = new ServerSocket(port);
@@ -24,20 +24,15 @@ public class Servidor2 {
             boolean continuar = true;
 
             while (continuar) {
-                int numeroCliente = flujoEntrada.readInt();
-                System.out.println("Recibido del cliente el número: " + numeroCliente);
 
-                if (numeroCliente == 0) {
-                    continuar = false; 
+                String mensajeCliente = flujoEntrada.readUTF();
+                System.out.println("Recibido del cliente: " + mensajeCliente);
+
+                if (mensajeCliente.equalsIgnoreCase("FIN")) {
+                    continuar = false;
                     flujoSalida.writeUTF("Conexión finalizada por el cliente.");
                 } else {
-                    boolean esPerfecto = LogicaNPerfecto.esNumeroPerfecto(numeroCliente);
-                    
-                    if (esPerfecto) {
-                        flujoSalida.writeUTF("El número " + numeroCliente + " ES un número perfecto.");
-                    } else {
-                        flujoSalida.writeUTF("El número " + numeroCliente + " NO es un número perfecto.");
-                    }
+                    flujoSalida.writeUTF("Mensaje recibido correctamente: " + ecoUpperCase(mensajeCliente));
                 }
             }
 
@@ -45,10 +40,15 @@ public class Servidor2 {
             flujoSalida.close();
             cliente.close();
             servidor.close();
-            System.out.println("Adiós papanatas");
-            
+            System.out.println("Servidor cerrado correctamente.");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static String ecoUpperCase(String mensaje) {
+        return mensaje.toUpperCase();
+    }
+
 }

@@ -1,4 +1,4 @@
-package tcp0;
+package tcp3;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,11 +7,11 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Cliente1 {
+public class Cliente3 {
     
     public static void main(String[] args) {
         
-        try {
+         try {
             String host = "localhost";
             int port = 6000;
 
@@ -24,31 +24,37 @@ public class Cliente1 {
             DataInputStream flujoEntrada = new DataInputStream(cliente.getInputStream());
             Scanner scanner = new Scanner(System.in);
 
-            boolean continuar = true;
+            for (int i = 1; i < 6; i++) {
+                int numero = -1;
 
-            while (continuar) {
-                System.out.print("\nEscribe un mensaje para el servidor o escribe 'FIN' para terminar la comunicacion: ");
-                String mensaje = scanner.nextLine();
-
-                flujoSalida.writeUTF(mensaje);
-
-                String respuesta = flujoEntrada.readUTF();
-                System.out.println("REspuesta del servidor: " + respuesta);
-
-                if (mensaje.equalsIgnoreCase("FIN")) {
-                    continuar = false;
+                while (numero < 1 || numero > 49) {
+                    System.out.println("Introduce el número " + i + " comprendido entre 1 y 49");
+                    if (scanner.hasNextInt()) {
+                        numero = scanner.nextInt();
+                        if (numero < 1 || numero > 49) {
+                            System.out.println("ERROR: El número debe estar comprendido entre 1 y 49");
+                        }
+                    } else {
+                        System.out.println("ERROR: El número debes introducir un número entero válido");
+                    }
                 }
+                flujoSalida.writeInt(numero);
+
             }
 
-            // Cerramos flujos y conexiones
+            String respuesta = flujoEntrada.readUTF();
+            System.out.println("\nRespuesta del servidor: "+ respuesta);
+
             scanner.close();
             flujoEntrada.close();
             flujoSalida.close();
             cliente.close();
-            System.out.println("Cliente desconectado.");
-            
+            System.out.println("La conexión se ha cerrado correctamente");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+
 }
