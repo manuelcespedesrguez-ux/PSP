@@ -32,6 +32,12 @@ public class Cliente1 {
                 DatagramPacket envio = new DatagramPacket(mensajito, mensajito.length, destino, puerto);
 
                 socket.send(envio);
+
+                if (!activo) {
+                    System.out.println("Cerrando porque pusiste quit");
+                    break;
+                }
+
                 System.out.println("Mensaje enviado correctamente a servidor: " + destino + ": " + puerto);
 
                 byte[] respuestaServidor = new byte[1024];
@@ -40,7 +46,8 @@ public class Cliente1 {
                 socket.receive(respuestadelServidor);
 
                 int bytesRespuesta = respuestadelServidor.getLength();
-                String textoRespuesta = new String(respuestadelServidor.getData(), 0, bytesRespuesta, StandardCharsets.UTF_8);
+                String textoRespuesta = new String(respuestadelServidor.getData(), 0, bytesRespuesta,
+                        StandardCharsets.UTF_8);
 
                 System.out.println("El servidor dice: " + textoRespuesta);
 

@@ -15,7 +15,7 @@ public class Server1 {
         byte[] buffer = new byte[1024];
 
         try (DatagramSocket socket = new DatagramSocket(puertoEscucha);
-            Scanner susito = new Scanner(System.in)) {
+                Scanner susito = new Scanner(System.in)) {
 
             System.out.println("Esperando datagrama en el puerto: " + puertoEscucha + "...");
             boolean activo = true;
@@ -30,12 +30,12 @@ public class Server1 {
                 System.out.println("Cliente (" + recibo.getAddress().getHostAddress() + " : " + recibo.getPort() + "): "
                         + paquete);
 
-                        
                 System.out.println("Escribe el mensaje: ");
 
                 if (paquete.equalsIgnoreCase("quit")) {
                     System.out.println("Se ha escrito 'quit', así que sayonara beibi");
                     activo = false;
+                    break;
                 }
 
                 String respuesta = susito.nextLine();
@@ -43,7 +43,7 @@ public class Server1 {
 
                 InetAddress ipCliente = recibo.getAddress();
                 int puertoCliente = recibo.getPort();
-                
+
                 byte[] mensajito = respuesta.getBytes(StandardCharsets.UTF_8);
 
                 DatagramPacket envio = new DatagramPacket(mensajito, mensajito.length, ipCliente, puertoCliente);
