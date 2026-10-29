@@ -1,4 +1,4 @@
-package tcp1;
+package TCP.tcp1;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

@@ -1,4 +1,4 @@
-package tcp1_1;
+package TCP.tcp1;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,13 +7,12 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Cliente1_1 {
-
+public class Cliente1 {
+    
     public static void main(String[] args) {
-
+        
         try {
-            // String host = "localhost";
-            String host = "10.82.138.144";
+            String host = "localhost";
             int port = 6000;
 
             Socket cliente = new Socket(host, port);
@@ -28,13 +27,13 @@ public class Cliente1_1 {
             boolean continuar = true;
 
             while (continuar) {
-                System.out.print("\nEscribe un mensaje para el servidor (o escribe 'FIN' para cortar): ");
+                System.out.print("\nEscribe un mensaje para el servidor o escribe 'FIN' para terminar la comunicacion: ");
                 String mensaje = scanner.nextLine();
 
                 flujoSalida.writeUTF(mensaje);
 
                 String respuesta = flujoEntrada.readUTF();
-                System.out.println("Respuesta del servidor: " + respuesta);
+                System.out.println("REspuesta del servidor: " + respuesta);
 
                 if (mensaje.equalsIgnoreCase("FIN")) {
                     continuar = false;
@@ -47,7 +46,7 @@ public class Cliente1_1 {
             flujoSalida.close();
             cliente.close();
             System.out.println("Cliente desconectado.");
-
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

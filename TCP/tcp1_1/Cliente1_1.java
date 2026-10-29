@@ -1,4 +1,4 @@
-package tcp2;
+package TCP.tcp1_1;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -7,12 +7,13 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Cliente2 {
-    
+public class Cliente1_1 {
+
     public static void main(String[] args) {
-        
+
         try {
-            String host = "localhost";
+            // String host = "localhost";
+            String host = "10.82.138.144";
             int port = 6000;
 
             Socket cliente = new Socket(host, port);
@@ -27,37 +28,26 @@ public class Cliente2 {
             boolean continuar = true;
 
             while (continuar) {
-                int numero = -1;
+                System.out.print("\nEscribe un mensaje para el servidor (o escribe 'FIN' para cortar): ");
+                String mensaje = scanner.nextLine();
 
-                while (numero < 0) {
-                    System.out.print("\nIntroduce un número entero positivo, escribe 0 para salir: ");
-                    if (scanner.hasNextInt()) {
-                        numero = scanner.nextInt();
-                        if (numero < 0) {
-                            System.out.println("Error: El número debe ser positivo.");
-                        }
-                    } else {
-                        System.out.println("Error: Debes introducir un número entero válido.");
-                        scanner.next(); 
-                    }
-                }
-
-                flujoSalida.writeInt(numero);
+                flujoSalida.writeUTF(mensaje);
 
                 String respuesta = flujoEntrada.readUTF();
                 System.out.println("Respuesta del servidor: " + respuesta);
 
-                if (numero == 0) {
+                if (mensaje.equalsIgnoreCase("FIN")) {
                     continuar = false;
                 }
             }
 
+            // Cerramos flujos y conexiones
             scanner.close();
             flujoEntrada.close();
             flujoSalida.close();
             cliente.close();
-            System.out.println("El cliente es un papanatas y se fue.");
-            
+            System.out.println("Cliente desconectado.");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

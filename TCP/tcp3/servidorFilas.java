@@ -1,4 +1,4 @@
-package tcp3;
+package TCP.tcp3;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
