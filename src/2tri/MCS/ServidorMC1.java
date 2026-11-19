@@ -1,4 +1,4 @@
-package MultiCastSocket;
+package MCS;
 
 import java.io.*;
 import java.net.*;
