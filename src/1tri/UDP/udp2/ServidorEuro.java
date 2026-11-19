@@ -1,4 +1,3 @@
-package UDP.udp2;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
