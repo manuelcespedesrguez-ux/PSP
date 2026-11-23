@@ -1,4 +1,4 @@
-package MCS;
+package MCS1;
 
 import java.net.*;
 
@@ -14,8 +14,9 @@ public class ClienteMC1 {
         String msg = "";
         byte[] buf = new byte[1000];
         //
-        while (!msg.trim().equals("*")) {
+        while (!msg.trim().equals("Quit")) {
             // Recibe el paquete del servidor multicast
+            System.out.println("Escribe el mensaje o escribe 'quit' si quieres salir");
             DatagramPacket paquete = new DatagramPacket(buf, buf.length);
             ms.receive(paquete);
             msg = new String(paquete.getData());
