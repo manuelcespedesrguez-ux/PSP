@@ -2,6 +2,7 @@ package Seguntri.TCPOO1;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class Cliente1Objeto {
     public static void main(String[] arg) throws IOException, ClassNotFoundException {
@@ -13,24 +14,34 @@ public class Cliente1Objeto {
         // Flujo de entrada para objetos
         ObjectInputStream perEnt = new ObjectInputStream(cliente.getInputStream());
         
-        // Se recibe un objeto
-        Persona dato = (Persona) perEnt.readObject(); // recibo objeto
-        System.out.println("Recibo: " + dato.getNombre() + "*" + dato.getEdad());
+        // Se recibe el objeto inicial del servidor
+        Persona dato = (Persona) perEnt.readObject();
+        System.out.println("Recibo del servidor: " + dato.getNombre() + "*" + dato.getEdad());
 
-        // Modifico el objeto
-        dato.setNombre("Juan Ramos");
-        dato.setEdad(22);
+        // Pedir los nuevos datos por teclado
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Introduce tu nombre: ");
+        String nuevoNombre = sc.nextLine().toUpperCase();
+        
+        System.out.print("Introduce tu edad: ");
+        int nuevaEdad = sc.nextInt();
+        int edadDefinitiva = nuevaEdad + 10;
 
-        // FLUJO DE salida para objetos
+        // Modifico el objeto con los datos introducidos
+        dato.setNombre(nuevoNombre);
+        dato.setEdad(edadDefinitiva);
+
+        // Flujo de salida para objetos
         ObjectOutputStream perSal = new ObjectOutputStream(cliente.getOutputStream());
         
-        // Se envía el objeto
+        // Se envía el objeto modificado al servidor
         perSal.writeObject(dato);
-        System.out.println("Envio: " + dato.getNombre() + "*" + dato.getEdad());
+        System.out.println("Envio al servidor: " + dato.getNombre() + "*" + dato.getEdad());
 
-        // CERRAR STREAMS Y SOCKETS
+        // CERRAR STREAMS, SCANNER Y SOCKETS
+        sc.close();
         perEnt.close();
         perSal.close();
         cliente.close();
     }
-} //..
+}

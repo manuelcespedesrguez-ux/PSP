@@ -4,6 +4,7 @@ import java.net.*;
 
 public class ClienteMC1 {
 
+    @SuppressWarnings("deprecation")
     public static void main(String args[]) throws Exception {
         // Se crea el socket multicast
         int Puerto = 12345; // Puerto multicast

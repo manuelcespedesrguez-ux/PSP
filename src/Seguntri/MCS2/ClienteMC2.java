@@ -9,6 +9,7 @@ import java.util.Enumeration;
 
 public class ClienteMC2 {
 
+    @SuppressWarnings("deprecation")
     public static void main(String args[]) throws Exception {
 
         // Se crea el socket multicast
@@ -34,6 +35,7 @@ public class ClienteMC2 {
         System.out.println("Socket cerrado...");
     }
 
+    @SuppressWarnings("unused")
     private static NetworkInterface obtenerInterfazActiva() throws SocketException {
 
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
