@@ -36,7 +36,7 @@ public class Cliente1Objeto {
         
         // Se envía el objeto modificado al servidor
         perSal.writeObject(dato);
-        System.out.println("Envio al servidor: " + dato.getNombre() + "*" + dato.getEdad());
+        System.out.println("Envio al servidor: " + dato.getNombre() + " * " + dato.getEdad());
 
         // CERRAR STREAMS, SCANNER Y SOCKETS
         sc.close();

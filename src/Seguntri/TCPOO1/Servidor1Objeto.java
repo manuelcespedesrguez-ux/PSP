@@ -21,7 +21,7 @@ public class Servidor1Objeto {
         // Se obtiene un stream para leer objetos
         ObjectInputStream inObjeto = new ObjectInputStream(cliente.getInputStream());
         Persona dato = (Persona) inObjeto.readObject();
-        System.out.println("Recibo: " + dato.getNombre() + "*" + dato.getEdad());
+        System.out.println("Recibo: " + dato.getNombre() + " * " + dato.getEdad());
 
         // CERRAR STREAMS Y SOCKETS
         outObjeto.close();
