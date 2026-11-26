@@ -2,43 +2,63 @@ package Seguntri.TCPOO1;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Cliente1Objeto {
+    @SuppressWarnings("unchecked")
     public static void main(String[] arg) throws IOException, ClassNotFoundException {
         String Host = "localhost";
-        int Puerto = 6000; // puerto remoto
+        int Puerto = 6000;
         System.out.println("PROGRAMA CLIENTE INICIADO....");
         Socket cliente = new Socket(Host, Puerto);
 
-        // Flujo de entrada para objetos
+        // Flujo de entrada para recibir la lista
         ObjectInputStream perEnt = new ObjectInputStream(cliente.getInputStream());
-        
-        // Se recibe el objeto inicial del servidor
-        Persona dato = (Persona) perEnt.readObject();
-        System.out.println("Recibo del servidor: " + dato.getNombre() + "*" + dato.getEdad());
+        ArrayList<Persona> listaPersonas = (ArrayList<Persona>) perEnt.readObject();
 
-        // Pedir los nuevos datos por teclado
         Scanner sc = new Scanner(System.in);
-        System.out.print("Introduce tu nombre: ");
-        String nuevoNombre = sc.nextLine().toUpperCase();
-        
-        System.out.print("Introduce tu edad: ");
-        int nuevaEdad = sc.nextInt();
-        int edadDefinitiva = nuevaEdad + 10;
+        String continuar;
+        boolean esElPrimero = true; // Controla si sobrescribimos a Juan
 
-        // Modifico el objeto con los datos introducidos
-        dato.setNombre(nuevoNombre);
-        dato.setEdad(edadDefinitiva);
+        do {
+            System.out.print("Introduce tu nombre: ");
+            String nuevoNombre = sc.nextLine().toUpperCase();
 
-        // Flujo de salida para objetos
+            System.out.print("Introduce tu edad: ");
+            int nuevaEdad = sc.nextInt();
+            sc.nextLine(); // Limpiar buffer
+            int edadDefinitiva = nuevaEdad + 10;
+
+            if (esElPrimero) {
+                // AQUÍ VA: Cogemos a Juan (posición 0) y le cambiamos los datos
+                Persona dato = listaPersonas.get(0);
+                dato.setNombre(nuevoNombre);
+                dato.setEdad(edadDefinitiva);
+                esElPrimero = false; // Los siguientes ya se añadirán como nuevos
+            } else {
+                // Para la segunda persona en adelante, creamos una nueva y la añadimos
+                Persona p = new Persona();
+                p.setNombre(nuevoNombre);
+                p.setEdad(edadDefinitiva);
+                listaPersonas.add(p);
+            }
+
+            System.out.print("¿Quieres añadir otra persona? (s/n): ");
+            continuar = sc.nextLine();
+        } while (continuar.equalsIgnoreCase("s"));
+
+        // Mostrar toda la lista en el cliente (Juan ya no existe)
+        System.out.println("\n--- Lista en el Cliente ---");
+        for (Persona p : listaPersonas) {
+            System.out.println("Envio al servidor: " + p.getNombre() + " * " + p.getEdad());
+        }
+
+        // Flujo de salida para enviar el ArrayList actualizado
         ObjectOutputStream perSal = new ObjectOutputStream(cliente.getOutputStream());
-        
-        // Se envía el objeto modificado al servidor
-        perSal.writeObject(dato);
-        System.out.println("Envio al servidor: " + dato.getNombre() + " * " + dato.getEdad());
+        perSal.writeObject(listaPersonas);
 
-        // CERRAR STREAMS, SCANNER Y SOCKETS
+        // Cerrar recursos
         sc.close();
         perEnt.close();
         perSal.close();
