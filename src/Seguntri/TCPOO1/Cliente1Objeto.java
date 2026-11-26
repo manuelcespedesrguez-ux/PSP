@@ -48,8 +48,7 @@ public class Cliente1Objeto {
             continuar = sc.nextLine();
         } while (continuar.equalsIgnoreCase("s"));
 
-        // Mostrar toda la lista en el cliente (Juan ya no existe)
-        System.out.println("\n--- Lista en el Cliente ---");
+        // Mostrar toda la lista en el cliente
         for (Persona p : listaPersonas) {
             System.out.println("Envio al servidor: " + p.getNombre() + " * " + p.getEdad());
         }
